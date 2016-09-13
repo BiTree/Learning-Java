@@ -1,11 +1,9 @@
 package pack1;
 
 import java.io.*;
-import java.nio.file.NoSuchFileException;
 import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
 import java.util.*;
-import java.util.regex.Matcher;
+
 
 class Student implements Comparable<Student>{
     private String name;
@@ -219,6 +217,52 @@ class MyLineReader{
 
 }
 
+
+class Solution1 {
+    public List<List<Integer>> threeSum(int[] nums) {
+        List<List<Integer>> list = new ArrayList<>();
+        Integer[] array = {1, 2, 3, -1, 0, -2, -3, -1};
+        Integer[][] store = new Integer[50][3];
+        Integer i, j, k, m = 0;
+        for (i = 0; i < array.length; i++)
+            for (j = i + 1; j < array.length; j++)
+                for (k = j + 1; k < array.length; k++) {
+                    if (array[i] + array[j] + array[k] == 0) {
+                        store[m][0] = array[i];
+                        store[m][1] = array[j];
+                        store[m][2] = array[k];
+                        m++;
+                    }
+
+                }
+        k = 0;
+        List<Integer> temp_list = new ArrayList<>();
+        for (i = 0; i < m; i++) {
+            Arrays.sort(store[i]);
+            for (j = i + 1; j < m; j++) {
+                Arrays.sort(store[j]);
+                if (!Arrays.equals(store[i], store[j]))
+                    k++;
+            }
+
+            if (k == m - i - 1) {
+                Integer count_this = 0;
+
+                for (; count_this < 3; count_this++)
+                    temp_list.add(store[i][count_this]);
+                list.add(temp_list);
+                temp_list.clear();
+
+
+            }
+            k = 0;
+        }
+        return list;
+
+    }
+}
+
+
 class MyFinalLineNumReader{
     private int  lineNumber = 0;
     private Reader reader;
@@ -267,14 +311,53 @@ class MyFinalLineNumReader{
 
 
 }
+class LinkList{
+    abstract static class Node{
+        private Object firstNode;
+        private Object object;
+        private Node nextNode;
+        public void setFirstNode(Object firstNode){
+            this.firstNode = firstNode;
+        }
+        public void setNode(Object object,Node nextNode){
+                this.object = object;
+                this.nextNode = nextNode;
 
-public  class Java1   {
 
-    public static void printSomething(Object obj){
+        }
+        abstract public void getNode(Object object,Node nextNode);
+
+
+
+
+
+    }
+
+
+
+
+
+
+
+
+
+
+}
+
+
+
+
+
+
+
+
+
+public  class Java1 {
+
+    public static void printSomething(Object obj) {
 
         System.out.println(obj);
     }
-
 
 
     /*public static ArrayList getUniqueElem(ArrayList al){
@@ -291,32 +374,32 @@ public  class Java1   {
 
     }*/
 
-    static class stuComp implements Comparator<Student>{
+    static class stuComp implements Comparator<Student> {
 
-        public int compare(Student stu1,Student stu2){
+        public int compare(Student stu1, Student stu2) {
             int num = stu1.getName().compareTo(stu2.getName());
             if (num == 0)
-                return stu1.getAge()-stu2.getAge();
+                return stu1.getAge() - stu2.getAge();
             return num;
 
 
-
         }
     }
-    public static void showInfo(HashMap<String,String> hashMap){
-            Set<Map.Entry<String,String>> set = hashMap.entrySet();
-            Iterator<Map.Entry<String,String>> it =set.iterator();
-            while (it.hasNext()){
-                Map.Entry<String,String> temp = it.next();
-                printSomething(temp.getKey()+" .. "+temp.getValue());
 
+    public static void showInfo(HashMap<String, String> hashMap) {
+        Set<Map.Entry<String, String>> set = hashMap.entrySet();
+        Iterator<Map.Entry<String, String>> it = set.iterator();
+        while (it.hasNext()) {
+            Map.Entry<String, String> temp = it.next();
+            printSomething(temp.getKey() + " .. " + temp.getValue());
 
 
         }
 
 
     }
-    public  static void stringSort(){
+
+    public static void stringSort() {
         TreeSet<String> list = new TreeSet<String>(Collections.reverseOrder(new stringCom()));
         list.add("asd");
         list.add("s22ds333333");
@@ -324,25 +407,82 @@ public  class Java1   {
         list.add("abc");
 
 
-
-
-
     }
-    public static void showArray(int ... arr){
-        for(int i : arr){
+
+    public static void showArray(int... arr) {
+        for (int i : arr) {
             printSomething(i);
         }
 
 
-
     }
-    public static void random(){
+
+    public static void random() {
 
         DecimalFormat dc = new DecimalFormat("0.00");
         double getDouble = Double.parseDouble(dc.format(2.3292323));
         printSomething(getDouble);
     }
+    public static void  writeFileStream() throws IOException{
+        FileOutputStream fostream = new FileOutputStream("demo.txt");
+        fostream.write("1234".getBytes());
+        fostream.close();
+
+
+
+
+    }
+    public static void  readFileStream() throws IOException{
+        FileInputStream fistream = new FileInputStream("demo.txt");
+        byte buf[] = new byte[fistream.available()];
+        fistream.read(buf);
+        printSomething(new String(buf));
+
+        fistream.close();
+
+
+
+
+    }
+    public static void countBinaryOnes() {
+        int counter = 0,get_num ;
+        Scanner scanner = new Scanner(System.in);
+        //Scanner scanner2 = new Scanner(System.in);
+        get_num = scanner.nextInt();
+        String str = "12333334";
+        printSomething(str);
+        printSomething(get_num);
+        char[] array = str.toCharArray();
+        int[] int_array = new int[array.length];
+        for (int i = 0; i < int_array.length; i++) {
+            int_array[i] = (int) array[i];
+
+
+        }
+        int []count_array = new int[get_num];
+        for (int begin = 0,end = begin+get_num-1;end<int_array.length;begin++,end++){
+            for (int j=0,begin_inner = begin;j<get_num;j++,begin_inner++){
+                count_array[j] = int_array[begin_inner];
+            }
+            Arrays.sort(count_array);
+            char result =  (char) (count_array[get_num-1]);
+            System.out.print(result+",");
+
+        }
+
+    }
+
     public static void main(String[] args) throws IOException {
+        //countBinaryOnes();
+        String str = "aaabbv**accc**q****2";
+        String strings[] = str.split("[**]");
+        for (String s:
+             strings) {
+            if (!s.equals(""))
+            printSomething(s);
+
+        }
+        printSomething(strings.length);
         /*showArray(2,3,4,5,1,2,3,6);
         String [] strArr ={"123","232","2323"};
         List <String>list = asList(strArr);
@@ -359,9 +499,17 @@ public  class Java1   {
 
         }
 
-        */
 
-            /*FileWriter fileWriter = null;
+
+
+
+
+
+
+
+            /*writeFileStream();
+        readFileStream();
+            FileWriter fileWriter = null;
         try {
             fileWriter = new FileWriter("D:\\demo.txt");
             fileWriter.write("fff");
@@ -380,13 +528,7 @@ public  class Java1   {
 
         }
         */
-        FileReader fileReader = new FileReader("demo.txt");
-        MyFinalLineNumReader myFinalLineNumReader = new MyFinalLineNumReader(fileReader);
-        myFinalLineNumReader.setLineNumber(100);
-        String forPrint = null;
-        while ((forPrint = myFinalLineNumReader.myFinalLineReader()) != null){
-            System.out.println(myFinalLineNumReader.getLineNumber()+" : "+forPrint);
-        }
+
 
 
 
@@ -427,16 +569,23 @@ public  class Java1   {
         }*/
 
 
-
-
-
-
+    }
+    public static void copy_exe() throws IOException{
+        BufferedInputStream bufferedInputStream = new BufferedInputStream(new FileInputStream("D:\\ccsetup509pro.exe"));
+        BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(new FileOutputStream("D:\\1121.exe"));
+        int ch = 0;
+        while ((ch = bufferedInputStream.read())!= -1){
+            bufferedOutputStream.write(ch);
+        }
+        bufferedInputStream.close();
+        bufferedOutputStream.close();
 
 
     }
 
 
-    }
+}
+
 
 
 
